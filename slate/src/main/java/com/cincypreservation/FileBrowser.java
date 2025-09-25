@@ -3,6 +3,7 @@ import java.io.*;
 import javax.swing.*;
 import java.awt.event.*;
 import javax.swing.filechooser.*;
+import javax.swing.filechooser.FileFilter;
 class filebrowser extends JFrame implements ActionListener {
     static JLabel l;
     filebrowser()
@@ -31,12 +32,16 @@ class filebrowser extends JFrame implements ActionListener {
     {
         // Save Dialog
         String com = evt.getActionCommand();
+        FileFilter filter = new FileNameExtensionFilter("Picture File",  new String[]{"jpg","jpeg","png"});
+
         if (com.equals("save")){
             JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-            // j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); // sets Fileselection mode to Directories Only
+            j.setFileFilter(filter);
+            j.addChoosableFileFilter(filter);
+            // j.setFileSelectionMode(JFileChooser.); // sets Fileselection mode to Directories Only
             int r = j.showSaveDialog(null);
             if (r == JFileChooser.APPROVE_OPTION){
-                l.setText(j.getSelectedFile().getAbsolutePath()); // sets
+                l.setText(j.getSelectedFile().getAbsolutePath()); 
             }
             else{
                 l.setText("The user cancelled the operation");
@@ -46,6 +51,8 @@ class filebrowser extends JFrame implements ActionListener {
         // Open Dialog
         else {
             JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+            j.setFileFilter(filter);
+            j.addChoosableFileFilter(filter);
             // j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); // sets Fileselection mode to Directories Only
             int r = j.showOpenDialog(null);
             if (r == JFileChooser.APPROVE_OPTION){

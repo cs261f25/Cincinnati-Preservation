@@ -29,24 +29,26 @@ class filebrowser extends JFrame implements ActionListener {
     }
     public void actionPerformed(ActionEvent evt)
     {
+        // Save Dialog
         String com = evt.getActionCommand();
         if (com.equals("save")){
             JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-            j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            // j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); // sets Fileselection mode to Directories Only
             int r = j.showSaveDialog(null);
             if (r == JFileChooser.APPROVE_OPTION){
-                l.setText(j.getSelectedFile().getAbsolutePath());
+                l.setText(j.getSelectedFile().getAbsolutePath()); // sets
             }
             else{
                 l.setText("The user cancelled the operation");
             }
 
         }
+        // Open Dialog
         else {
             JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-            j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            // j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); // sets Fileselection mode to Directories Only
             int r = j.showOpenDialog(null);
-            if r == JFileChooser.APPROVE_OPTION){
+            if (r == JFileChooser.APPROVE_OPTION){
                 l.setText(j.getSelectedFile().getAbsolutePath());
             }
             else {

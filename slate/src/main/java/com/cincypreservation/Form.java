@@ -1,48 +1,41 @@
 package com.cincypreservation;
-import java.util.Scanner;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
 
 public class Form {
-    public static void main(String[] args)
-    {
-        Scanner scanner = new Scanner(System.in);
+    public static void main(String[] args) {
+        try {
+            // Create BufferedReader to read from the keyboard
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        //Input for basic informational fields
-        System.out.print("Property Name: ");
-        String propertyName = scanner.nextLine();
+            //Prompt user to enter various information about the property
+            System.out.print("Property Name: ");
+            String propertyName = reader.readLine();
 
-        System.out.print("Property Address: ");
-        String propertyAddress = scanner.nextLine(); //Just street address
+            System.out.print("Street Address: ");
+            String streetAddress = reader.readLine();
 
-        System.out.print("Property Owner: ");
-        String propertyOwner = scanner.nextLine();
+            System.out.print("Property Owner: ");
+            String propertyOwner = reader.readLine();
 
-        System.out.print("Inspector Name: ");
-        String inspectorName = scanner.nextLine();
+            System.out.print("Inspector Name: ");
+            String inspectorName = reader.readLine();
 
-        System.out.print("Inspection Date (MM/DD/YYYY): ");
-        String inspectionDate = scanner.nextLine(); //Better way to format date?
+            System.out.print("Inspection Date (MM/DD/YYYY): ");
+            String inspectionDate = reader.readLine(); //Better way to format date?
 
-        /*
-        Input for masonry portion of inspection. This is an example of how we might approach one section of the form.
-        Each property needs different form fields though, so this will need to read from prev year's inspection to determine what to ask.
-        */
-        System.out.print("Masonry type: ");
-        String masonryType = scanner.nextLine();
+            //Print out property information to verify that input workedf
+            System.out.println();
+            System.out.println("Property Information");
+            System.out.println(propertyName + ", owned by " + propertyOwner);
+            System.out.println("Located at " + streetAddress);
+            System.out.println("Inspected by " + inspectorName + " on " + inspectionDate);
 
-        System.out.print("Masonry condition (north): ");
-        String masonryNorth = scanner.nextLine();
-        
-        System.out.print("Masonry condition (east): ");
-        String masonryEast = scanner.nextLine();
-
-        System.out.print("Masonry condition (south): ");
-        String masonrySouth = scanner.nextLine();
-
-        System.out.print("Masonry condition (west): ");
-        String masonryWest = scanner.nextLine();
-
-        System.out.print("Comments on masonry: ");
-        String masonryComments = scanner.nextLine();
-
+        } catch (IOException e) {
+            System.out.println("An error occurred while reading input."); //Error handling
+            e.printStackTrace();
+        }
     }
 }

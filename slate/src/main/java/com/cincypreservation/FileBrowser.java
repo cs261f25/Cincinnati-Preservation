@@ -1,7 +1,10 @@
 package com.cincypreservation;
 import java.io.*;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+
 import javax.swing.filechooser.*;
 import javax.swing.filechooser.FileFilter;
 class filebrowser extends JFrame implements ActionListener {
@@ -11,11 +14,11 @@ class filebrowser extends JFrame implements ActionListener {
     }
     public static void main(String args[])
     {
-        JFrame f = new JFrame("File chooser to select directories");
+        JFrame f = new JFrame("File chooser to select and display directories");
         f.setSize(400,400);
         f.setVisible(true);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JButton button1 = new JButton("Save");
+        JButton button1 = new JButton("Display");
         JButton button2 = new JButton("Open");
         filebrowser f1 = new filebrowser();
         button1.addActionListener(f1);
@@ -30,26 +33,17 @@ class filebrowser extends JFrame implements ActionListener {
     }
     public void actionPerformed(ActionEvent evt)
     {
-        // Save Dialog
+        
         String com = evt.getActionCommand();
         FileFilter filter = new FileNameExtensionFilter("Picture File",  new String[]{"jpg","jpeg","png"});
-
-        if (com.equals("save")){
-            JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-            j.setFileFilter(filter);
-            j.addChoosableFileFilter(filter);
-            // j.setFileSelectionMode(JFileChooser.); // sets Fileselection mode to Directories Only
-            int r = j.showSaveDialog(null);
-            if (r == JFileChooser.APPROVE_OPTION){
-                l.setText(j.getSelectedFile().getAbsolutePath()); 
+        if (com.equals("Display")){ 
+            // Display Button
+            if(!testImages(l)){
+                l.setText("Image failed to load - file path might be invalid");
             }
-            else{
-                l.setText("The user cancelled the operation");
-            }
-
-        }
-        // Open Dialog
+        } 
         else {
+            // Open Button
             JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
             j.setFileFilter(filter);
             j.addChoosableFileFilter(filter);
@@ -61,6 +55,21 @@ class filebrowser extends JFrame implements ActionListener {
             else {
                 l.setText("The user cancelled the operation");
             }
+        }   
+    }
+    private boolean testImages(JLabel l){
+        final String IMG_PATH = l.getText();
+        if (IMG_PATH.contains(".jpg")){
+            try{
+                BufferedImage img = ImageIO.read(new File(IMG_PATH));
+                ImageIcon icon = new ImageIcon(img);
+                JLabel photolabel = new JLabel(icon);
+                JOptionPane.showMessageDialog(null, photolabel);
+                return true;
+            } catch (IOException e){
+                e.printStackTrace();
+            }
         }
+        return false;
     }
 }

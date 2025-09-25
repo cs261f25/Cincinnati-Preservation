@@ -13,4 +13,16 @@
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
+    <dependency>
+        <groupId>com.microsoft.graph</groupId>
+        <artifactId>microsoft-graph</artifactId>
+        <version>6.53.0</version>
+    </dependency>
+
+    <dependency>
+        <groupId>com.azure</groupId>
+        <artifactId>azure-identity</artifactId>
+        <version>1.11.0</version>
+    </dependency>
+
 </project>

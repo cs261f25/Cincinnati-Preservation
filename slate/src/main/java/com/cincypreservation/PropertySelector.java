@@ -1,3 +1,5 @@
+package com.cincypreservation;
+
 import javax.swing.*;
 
 public class PropertySelector {

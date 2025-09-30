@@ -14,7 +14,7 @@ class filebrowser extends JFrame implements ActionListener {
     }
     public static void main(String args[])
     {
-        JFrame f = new JFrame("File chooser to select and display directories");
+        JFrame f = new JFrame("File Chooser - Display Photos");
         f.setSize(400,400);
         f.setVisible(true);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -37,7 +37,6 @@ class filebrowser extends JFrame implements ActionListener {
         String com = evt.getActionCommand();
         FileFilter filter = new FileNameExtensionFilter("Picture File",  new String[]{"jpg","jpeg","png"});
         if (com.equals("Display")){ 
-            // Display Button
             if(!testImages(l)){
                 l.setText("Image failed to load - file path might be invalid");
             }
@@ -47,7 +46,6 @@ class filebrowser extends JFrame implements ActionListener {
             JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
             j.setFileFilter(filter);
             j.addChoosableFileFilter(filter);
-            // j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); // sets Fileselection mode to Directories Only
             int r = j.showOpenDialog(null);
             if (r == JFileChooser.APPROVE_OPTION){
                 l.setText(j.getSelectedFile().getAbsolutePath());

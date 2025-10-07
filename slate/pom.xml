@@ -14,15 +14,9 @@
     </properties>
 
     <dependency>
-        <groupId>com.microsoft.graph</groupId>
-        <artifactId>microsoft-graph</artifactId>
-        <version>6.53.0</version>
-    </dependency>
-
-    <dependency>
-        <groupId>com.azure</groupId>
-        <artifactId>azure-identity</artifactId>
-        <version>1.11.0</version>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi-ooxml</artifactId>
+        <version>5.2.3</version>
     </dependency>
 
 </project>

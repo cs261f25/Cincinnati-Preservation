@@ -10,6 +10,7 @@ class filebrowser extends JFrame implements ActionListener {
     }
     public static void main(String args[])
     {
+        // Initializes the GUI.
         JFrame f = new JFrame("File Chooser - Open Excel File");
         f.setSize(400,400);
         f.setVisible(true);
@@ -26,18 +27,19 @@ class filebrowser extends JFrame implements ActionListener {
     }
     public void actionPerformed(ActionEvent evt)
     {
+        // Captures actions in the GUI.
         String com = evt.getActionCommand();
-        FileFilter filter = new FileNameExtensionFilter("Excel File",  new String[]{"xlsx","xls"});
+        FileFilter filter = new FileNameExtensionFilter("Excel File",  new String[]{"xlsx","xls"}); // Filter files by extension.
         if (com.equals("Open File")){ 
             JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-            j.setFileFilter(filter);
+            j.setFileFilter(filter); // Sets the filter of the File Explorer.
             j.addChoosableFileFilter(filter);
             int r = j.showOpenDialog(null);
             if (r == JFileChooser.APPROVE_OPTION){
                 l.setText(j.getSelectedFile().getAbsolutePath());
             }
             else {
-                l.setText("The user cancelled the operation");
+                l.setText("The user cancelled the operation.");
             }
         }   
     }

@@ -32,7 +32,6 @@ class filebrowser extends JFrame implements ActionListener {
     {
         // Captures actions in the GUI.
         String com = evt.getActionCommand();
-        Filter filter = new Filter("xls");
         if (com.equals("Browse Files")){ 
             JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
             int r = j.showOpenDialog(null);

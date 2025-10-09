@@ -32,8 +32,8 @@ class filebrowser extends JFrame implements ActionListener {
         FileFilter filter = new FileNameExtensionFilter("Excel File",  new String[]{"xls","xlsx"});
         if (com.equals("Browse Files")){ 
             JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-            int r = j.showOpenDialog(null);
             j.addChoosableFileFilter(filter);
+            int r = j.showOpenDialog(null);
             if (r == JFileChooser.APPROVE_OPTION){
                 l.setText(j.getSelectedFile().getAbsolutePath());
             }

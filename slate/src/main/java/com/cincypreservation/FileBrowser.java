@@ -1,9 +1,6 @@
 package com.cincypreservation;
-import java.io.*;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 
 import javax.swing.filechooser.*;
 import javax.swing.filechooser.FileFilter;
@@ -32,9 +29,11 @@ class filebrowser extends JFrame implements ActionListener {
     {
         // Captures actions in the GUI.
         String com = evt.getActionCommand();
+        FileFilter filter = new FileNameExtensionFilter("Excel File",  new String[]{"xls","xlsx"});
         if (com.equals("Browse Files")){ 
             JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
             int r = j.showOpenDialog(null);
+            j.addChoosableFileFilter(filter);
             if (r == JFileChooser.APPROVE_OPTION){
                 l.setText(j.getSelectedFile().getAbsolutePath());
             }

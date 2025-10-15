@@ -1,12 +1,18 @@
 package com.cincypreservation;
-import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.filechooser.*;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
-class filebrowser extends JFrame implements ActionListener {
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
+class FileBrowser extends JFrame implements ActionListener {
     static JLabel l;
-    filebrowser()
+    FileBrowser()
     {
     }
     public static void main(String args[])
@@ -16,7 +22,7 @@ class filebrowser extends JFrame implements ActionListener {
         f.setVisible(true);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JButton button1 = new JButton("Browse Files");
-        filebrowser f1 = new filebrowser();
+        FileBrowser f1 = new FileBrowser();
         button1.addActionListener(f1);
         JPanel p = new JPanel();
         p.add(button1);

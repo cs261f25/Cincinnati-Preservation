@@ -14,7 +14,7 @@ public class InternetTester implements ActionListener {
         JFrame f = new JFrame("Internet Connection Tester");
         f.setSize(400,100);
         f.setVisible(true);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         // Button
         JButton b1 = new JButton("Test Internet Connection"); 
         b1.addActionListener(this);
@@ -52,9 +52,6 @@ public class InternetTester implements ActionListener {
             System.out.println("Not Connected to the Internet");
         }
         return false;
-    }
-    public static void main(String[] args){
-        new InternetTester();
     }
 }
 

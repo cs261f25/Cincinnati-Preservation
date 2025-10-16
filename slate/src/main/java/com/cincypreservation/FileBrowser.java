@@ -20,7 +20,7 @@ class FileBrowser extends JFrame implements ActionListener {
         JFrame f = new JFrame("File Chooser");
         f.setSize(400,400);
         f.setVisible(true);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         JButton button1 = new JButton("Browse Files");
         FileBrowser f1 = new FileBrowser();
         button1.addActionListener(f1);

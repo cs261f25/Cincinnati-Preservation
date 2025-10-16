@@ -53,6 +53,9 @@ public class InternetTester implements ActionListener {
         }
         return false;
     }
+    public static void main(String[] args){
+        new InternetTester();
+    }
 }
 
 

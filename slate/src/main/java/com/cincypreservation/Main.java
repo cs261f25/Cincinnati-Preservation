@@ -17,7 +17,9 @@ public class Main {
         JButton formButton = new JButton("Create new Form");
         JButton internetButton = new JButton("Test Internet");
         JButton fileButton = new JButton("Open File");
+        JButton fileReaderButton = new JButton("Read Excel File");
 
+        tb.add(fileReaderButton);
         tb.add(cameraButton);
         tb.add(formButton);
         tb.add(internetButton);
@@ -45,6 +47,11 @@ public class Main {
         fileButton.addActionListener(e -> {
             FileBrowser fb = new FileBrowser();
             fb.main(new String[1]);
+        });
+
+        fileReaderButton.addActionListener(e -> {
+            FileReader fr = new FileReader();
+            fr.main(new String[1]);
         });
     }
 }

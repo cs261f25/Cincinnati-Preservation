@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
-class FileBrowser extends JFrame implements ActionListener {
+public class FileBrowser extends JFrame implements ActionListener {
     private JLabel l;
     private JFrame f;
     private JPanel p;

@@ -46,7 +46,7 @@ public class Main {
 
         fileButton.addActionListener(e -> {
             FileBrowser fb = new FileBrowser();
-            fb.main(new String[1]);
+            fb.initialize();
         });
 
         fileReaderButton.addActionListener(e -> {

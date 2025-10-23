@@ -11,37 +11,48 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 class FileBrowser extends JFrame implements ActionListener {
-    static JLabel l;
-    FileBrowser()
+    private JLabel l;
+    private JFrame f;
+    private JPanel p;
+    private JButton b1;
+    private String filedirectory = "-1";
+    public FileBrowser()
     {
     }
-    public static void main(String args[])
-    {
-        JFrame f = new JFrame("File Chooser");
+    
+    public void initialize(){
+        f = new JFrame("File Chooser");
+        b1 = new JButton("Browse Files");
+        b1.addActionListener(this);
+        p = new JPanel();
+        l = new JLabel("no file selected");
+        p.add(b1);
+        p.add(l);
+
+        f.add(p);
+        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        displayGUI();
+    }
+
+    private void displayGUI(){
+        f.pack();
         f.setSize(400,400);
         f.setVisible(true);
-        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        JButton button1 = new JButton("Browse Files");
-        FileBrowser f1 = new FileBrowser();
-        button1.addActionListener(f1);
-        JPanel p = new JPanel();
-        p.add(button1);
-        l = new JLabel("no file selected");
-        p.add(l);
-        f.add(p);
-        f.setVisible(true);
     }
+
+    @Override
     public void actionPerformed(ActionEvent evt)
     {
         // Captures actions in the GUI.
-        String com = evt.getActionCommand();
+        Object o = evt.getSource();
         FileFilter filter = new FileNameExtensionFilter("Excel File",  new String[]{"xls","xlsx"});
-        if (com.equals("Browse Files")){ 
+        if (o == b1){ 
             JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
             j.addChoosableFileFilter(filter);
             int r = j.showOpenDialog(null);
             if (r == JFileChooser.APPROVE_OPTION){
-                l.setText(j.getSelectedFile().getAbsolutePath());
+                filedirectory = j.getSelectedFile().getAbsolutePath();
+                l.setText("File Selected = " + filedirectory);
             }
             else {
                 l.setText("The user cancelled the operation.");

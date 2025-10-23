@@ -40,6 +40,10 @@ class FileBrowser extends JFrame implements ActionListener {
         f.setVisible(true);
     }
 
+    private String getFileDirectory(){
+        return filedirectory;
+    }
+
     @Override
     public void actionPerformed(ActionEvent evt)
     {

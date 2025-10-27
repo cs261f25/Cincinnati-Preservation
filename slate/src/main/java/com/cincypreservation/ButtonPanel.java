@@ -9,7 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class ButtonPanel extends JPanel implements ActionListener {
-    private JButton b1,b2;
+    private JButton b1,b2; 
     private ArrayList<JButton> buttons = new ArrayList<>();
     private final static Dimension dimension = new Dimension(200,50);
     public ButtonPanel(){
@@ -18,6 +18,7 @@ public class ButtonPanel extends JPanel implements ActionListener {
     private void initialize(){
         b1 = initializeButton(b1, "Button 1 - Launch Camera");
         b2 = initializeButton(b2, "Button 2 - File Reader");
+        // Adds all the buttons 
         for (JButton button : buttons){
             add(button);
         }
@@ -33,6 +34,10 @@ public class ButtonPanel extends JPanel implements ActionListener {
             fileReader.main(null);
         }
     }
+    /**
+     * This helper method intializates given JButton objects with a given label.
+     * It also stores buttons it initializes into an unfixed size Arraylist, to be called later.
+     */
     private JButton initializeButton(JButton b,String label){
         b = new JButton(label);
         b.setPreferredSize(dimension);

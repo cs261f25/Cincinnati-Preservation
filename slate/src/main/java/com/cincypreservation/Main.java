@@ -10,7 +10,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 public class Main {
-    final static String TITLE = "Building Inspection Application";
+    final static String TITLE = "Inspection Tracker App";
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable(){
                 public void run(){

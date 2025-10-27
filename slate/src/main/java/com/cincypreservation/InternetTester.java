@@ -4,17 +4,12 @@ import java.net.URLConnection;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class InternetTester implements ActionListener {
+public class InternetTester extends JPanel implements ActionListener {
     private static JLabel l;
     public InternetTester(){
         initialize();
     }
     public void initialize(){
-        // Frame
-        JFrame f = new JFrame("Internet Connection Tester");
-        f.setSize(400,100);
-        f.setVisible(true);
-        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         // Button
         JButton b1 = new JButton("Test Internet Connection"); 
         b1.addActionListener(this);
@@ -22,12 +17,8 @@ public class InternetTester implements ActionListener {
         // Label
         l = new JLabel("Test Internet Connection");
         // Panel
-        JPanel p = new JPanel();
-        p.add(b1);
-        p.add(l);
-        // Finalization
-        f.add(p);
-        f.setVisible(true);
+        add(b1);
+        add(l);
     }
     public void actionPerformed(ActionEvent evt){
         String com = evt.getActionCommand();

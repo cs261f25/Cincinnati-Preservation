@@ -10,34 +10,21 @@ import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
-public class FileBrowser extends JFrame implements ActionListener {
+public class FileBrowser extends JPanel implements ActionListener {
     private JLabel l;
-    private JFrame f;
-    private JPanel p;
     private JButton b1;
     private String filedirectory = "-1";
     public FileBrowser()
     {
+        initialize();
     }
     
     public void initialize(){
-        f = new JFrame("File Chooser");
         b1 = new JButton("Browse Files");
         b1.addActionListener(this);
-        p = new JPanel();
         l = new JLabel("no file selected");
-        p.add(b1);
-        p.add(l);
-
-        f.add(p);
-        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        displayGUI();
-    }
-
-    private void displayGUI(){
-        f.pack();
-        f.setSize(400,400);
-        f.setVisible(true);
+        add(b1);
+        add(l);
     }
 
     private String getFileDirectory(){

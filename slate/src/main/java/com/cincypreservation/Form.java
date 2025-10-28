@@ -5,7 +5,8 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 
 public class Form {
-    public static void main(String[] args) {
+
+    public void basicInfo() {
         try {
             // Create BufferedReader to read from the keyboard
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -44,5 +45,12 @@ public class Form {
             System.out.println("An error occurred while reading input."); // Error handling
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+
+        Form form = new Form();
+        form.basicInfo();
+
     }
 }

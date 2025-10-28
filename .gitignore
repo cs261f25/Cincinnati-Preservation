@@ -1,0 +1,4 @@
+slate/target/
+.vscode/
+.idea/
+*.class

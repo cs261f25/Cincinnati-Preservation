@@ -6,6 +6,14 @@ import java.io.IOException;
 
 public class Form {
 
+    // Store the collected data as fields
+    private String propertyName;
+    private String streetAddress;
+    private String propertyOwner;
+    private String inspectorName;
+    private String inspectionDate;
+    private String inspectionId;
+
     public void basicInfo() {
         try {
             // Create BufferedReader to read from the keyboard
@@ -13,22 +21,22 @@ public class Form {
 
             // Prompt user to enter various information about the property
             System.out.print("Property Name: ");
-            String propertyName = reader.readLine();
+            propertyName = reader.readLine();
 
             System.out.print("Street Address: ");
-            String streetAddress = reader.readLine();
+            streetAddress = reader.readLine();
 
             System.out.print("Property Owner: ");
-            String propertyOwner = reader.readLine();
+            propertyOwner = reader.readLine();
 
             System.out.print("Inspector Name: ");
-            String inspectorName = reader.readLine();
+            inspectorName = reader.readLine();
 
             System.out.print("Inspection Date (MM/DD/YYYY): ");
-            String inspectionDate = reader.readLine();
+            inspectionDate = reader.readLine();
 
             // Generate a simple inspection ID using current time
-            String inspectionId = "INSP-" + System.currentTimeMillis();
+            inspectionId = "INSP-" + System.currentTimeMillis();
 
             // Create an InspectorInfo object to store inspector data
             InspectorInfo inspector = new InspectorInfo(inspectorName, inspectionId);
@@ -45,6 +53,31 @@ public class Form {
             System.out.println("An error occurred while reading input."); // Error handling
             e.printStackTrace();
         }
+    }
+
+    // Getter methods to allow FileReader to access the collected data
+    public String getPropertyName() {
+        return propertyName;
+    }
+
+    public String getStreetAddress() {
+        return streetAddress;
+    }
+
+    public String getPropertyOwner() {
+        return propertyOwner;
+    }
+
+    public String getInspectorName() {
+        return inspectorName;
+    }
+
+    public String getInspectionDate() {
+        return inspectionDate;
+    }
+
+    public String getInspectionId() {
+        return inspectionId;
     }
 
     public static void main(String[] args) {

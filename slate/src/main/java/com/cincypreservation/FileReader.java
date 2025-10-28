@@ -27,7 +27,7 @@ public class FileReader {
     }
     
     /**
-     * Reads from and writes to the specified Excel file
+     * Writes to the specified Excel file
      * @param filePath The path to the Excel file
      */
     public static void processExcelFile(String filePath) {
@@ -35,16 +35,6 @@ public class FileReader {
              Workbook workbook = new XSSFWorkbook(fis)) {
             
             Sheet sheet = workbook.getSheetAt(0);
-            
-            // Read value from A1
-            Row row = sheet.getRow(0);
-            if (row != null) {
-                Cell cell = row.getCell(0);
-                if (cell != null) {
-                    String value = cell.toString();
-                    System.out.println("Value in A1: " + value);
-                }
-            }
             
             // Write to B1
             if (row == null) {
@@ -66,35 +56,6 @@ public class FileReader {
         }
     }
     
-    /**
-     * Reads a value from a specific cell in the Excel file
-     * @param filePath The path to the Excel file
-     * @param sheetIndex The sheet index (0-based)
-     * @param rowIndex The row index (0-based)
-     * @param colIndex The column index (0-based)
-     * @return The cell value as a String, or null if not found
-     */
-    public static String readCell(String filePath, int sheetIndex, int rowIndex, int colIndex) {
-        try (FileInputStream fis = new FileInputStream(filePath);
-             Workbook workbook = new XSSFWorkbook(fis)) {
-            
-            Sheet sheet = workbook.getSheetAt(sheetIndex);
-            Row row = sheet.getRow(rowIndex);
-            
-            if (row != null) {
-                Cell cell = row.getCell(colIndex);
-                if (cell != null) {
-                    return cell.toString();
-                }
-            }
-            
-        } catch (IOException e) {
-            System.err.println("Error reading cell: " + e.getMessage());
-            e.printStackTrace();
-        }
-        
-        return null;
-    }
     
     /**
      * Writes a value to a specific cell in the Excel file

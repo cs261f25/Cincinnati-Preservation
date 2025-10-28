@@ -17,7 +17,6 @@ public class ButtonPanel extends JPanel implements ActionListener {
     }
     private void initialize(){
         b1 = initializeButton(b1, "Button 1 - Launch Camera");
-        b2 = initializeButton(b2, "Button 2 - File Reader");
         // Adds all the buttons 
         for (JButton button : buttons){
             add(button);
@@ -29,9 +28,6 @@ public class ButtonPanel extends JPanel implements ActionListener {
         if (o == b1) {
             LaunchCamera launchcamera = new LaunchCamera();
             launchcamera.main(null);
-        } else if (o == b2) {
-            FileReader fileReader = new FileReader();
-            fileReader.main(null);
         }
     }
     /**

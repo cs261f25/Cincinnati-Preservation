@@ -11,6 +11,7 @@ import java.io.IOException;
 public class FileReader {
     
     public static void main(String[] args) {
+
         // Get file path from FileBrowser
         File selectedFile = FileBrowser.selectFile();
         
@@ -22,38 +23,31 @@ public class FileReader {
         String filePath = selectedFile.getAbsolutePath();
         System.out.println("Selected file: " + filePath);
         
-        // Perform read/write operations
-        processExcelFile(filePath);
+        // Collect user input using Form
+        Form form = new Form();
+        form.basicInfo();
+        
+        // Write basic info to the selected Excel file
+        writeBasicInfo(filePath, form);
     }
     
     /**
-     * Writes to the specified Excel file
+     * Writes basic info collected from Form to the Excel file
      * @param filePath The path to the Excel file
+     * @param form The Form object containing collected data
      */
-    public static void processExcelFile(String filePath) {
-        try (FileInputStream fis = new FileInputStream(filePath);
-             Workbook workbook = new XSSFWorkbook(fis)) {
-            
-            Sheet sheet = workbook.getSheetAt(0);
-            
-            // Write to B1
-            if (row == null) {
-                row = sheet.createRow(0);
-            }
-            Cell cellB1 = row.createCell(1);
-            cellB1.setCellValue("Sample text");
-            
-            // Save the file
-            try (FileOutputStream fos = new FileOutputStream(filePath)) {
-                workbook.write(fos);
-            }
-            
-            System.out.println("Successfully wrote to B1");
-            
-        } catch (IOException e) {
-            System.err.println("Error processing Excel file: " + e.getMessage());
-            e.printStackTrace();
-        }
+    public static void writeBasicInfo(String filePath, Form form) {
+        // Write property information to cells in column B
+        writeCell(filePath, 0, 0, 1, form.getPropertyName());      // B1 - Property Name
+        writeCell(filePath, 0, 1, 1, form.getStreetAddress());     // B2 - Property Address
+        writeCell(filePath, 0, 2, 1, form.getPropertyOwner());     // B3 - Property Owner
+
+        // Write inspector information to cells in column F
+        writeCell(filePath, 0, 0, 5, form.getInspectorName());     // F1 - Inspector Name
+        writeCell(filePath, 0, 1, 5, form.getInspectionId());      // F2 - Inspector ID
+        writeCell(filePath, 0, 2, 5, form.getInspectionDate());    // F3 - Inspection Date
+        
+        System.out.println("All basic information written to Excel file.");
     }
     
     

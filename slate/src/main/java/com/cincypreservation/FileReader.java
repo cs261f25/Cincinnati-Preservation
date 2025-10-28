@@ -22,7 +22,7 @@ public class FileReader extends JPanel implements ActionListener{
         initialize();
     }
     private void initialize(){
-        b1 = initializeButton(b1, "File Reader");
+        b1 = initializeButton(b1, "Launch File Reader");
         add(b1);
     }
 

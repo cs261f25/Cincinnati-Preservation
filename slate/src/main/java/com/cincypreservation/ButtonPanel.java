@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 public class ButtonPanel extends JPanel implements ActionListener {
     private JButton b1,b2; 
     private ArrayList<JButton> buttons = new ArrayList<>();
-    private final static Dimension dimension = new Dimension(200,50);
+    private final static Dimension BUTTON_DIMENSIONS = new Dimension(200,50);
     public ButtonPanel(){
         initialize();
     }
@@ -36,7 +36,7 @@ public class ButtonPanel extends JPanel implements ActionListener {
      */
     private JButton initializeButton(JButton b,String label){
         b = new JButton(label);
-        b.setPreferredSize(dimension);
+        b.setPreferredSize(BUTTON_DIMENSIONS);
         b.setActionCommand(label);
         b.addActionListener(this);
         buttons.add(b);

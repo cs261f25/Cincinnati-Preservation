@@ -11,6 +11,7 @@ import javax.swing.UIManager;
 
 public class Main {
     final static String TITLE = "Inspection Tracker App";
+    final static Dimension FRAME_DIMENSION = new Dimension(600,600);
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable(){
                 public void run(){
@@ -25,7 +26,7 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         frame.add(new TabbedMenu(), BorderLayout.CENTER);
-        frame.setSize(new Dimension(600,600));
+        frame.setSize(FRAME_DIMENSION);
         frame.setVisible(true);
     }
 }

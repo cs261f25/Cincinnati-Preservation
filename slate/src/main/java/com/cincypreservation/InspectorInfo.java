@@ -30,4 +30,3 @@ public class InspectorInfo {
         return "Inspection ID: " + inspectionId + " | Inspector: " + inspectorName;
     }
 }
-

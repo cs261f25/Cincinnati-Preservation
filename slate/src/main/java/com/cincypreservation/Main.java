@@ -27,6 +27,7 @@ public class Main {
 
         frame.add(new TabbedMenu(), BorderLayout.CENTER);
         frame.setSize(FRAME_DIMENSION);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 }

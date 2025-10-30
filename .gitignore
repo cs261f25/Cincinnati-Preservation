@@ -2,3 +2,4 @@ slate/target/
 .vscode/
 .idea/
 *.class
+inspections.txt

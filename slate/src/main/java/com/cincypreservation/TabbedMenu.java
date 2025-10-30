@@ -10,8 +10,8 @@ public class TabbedMenu extends JPanel {
         setLayout(new GridLayout(1,1));
         JTabbedPane tabbedPane = new JTabbedPane();
 
-        JComponent panel1 = new FileBrowser();
-        tabbedPane.addTab("Tab 1 - File Browser", panel1);
+        JComponent panel1 = new FileReader();
+        tabbedPane.addTab("Tab 1 - File Reader", panel1);
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
         JComponent panel2 = new InternetTester();

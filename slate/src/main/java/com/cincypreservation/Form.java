@@ -3,7 +3,7 @@ package com.cincypreservation;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.FileReader;
+
 
 public class Form {
 
@@ -87,7 +87,7 @@ public class Form {
         File file = new File(FILE_PATH);
         if (!file.exists()) return;
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader reader = new BufferedReader(new java.io.FileReader(file))) {
 
             String line;
             while ((line = reader.readLine()) != null) {

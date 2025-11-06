@@ -3,15 +3,13 @@ package com.cincypreservation;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-// temporary test change changed line 90
-
 
 public class Form {
 
     private static final String FILE_PATH = "inspections.txt"; // save file name
     private static List<Form> inspections = new ArrayList<>();
 
-    // Fields
+    // Fields: Basic Info
     private String propertyName;
     private String streetAddress;
     private String propertyOwner;
@@ -19,17 +17,40 @@ public class Form {
     private String inspectionDate;
     private String inspectionId;
 
+    // Fields: Feature Inspection
+    // TO BE ADDED LATER
+
+    // Fields: General Assessment
+    private String overallCondition;
+    private String comments;
+    private String advice;
+    private String followUpActivity;
+
+
     // Constructor
     public Form() {}
 
     public Form(String propertyName, String streetAddress, String propertyOwner,
-                String inspectorName, String inspectionDate, String inspectionId) {
+                String inspectorName, String inspectionDate, String inspectionId,
+                String overallCondition, String comments, String advice,
+                String followUpActivity) {
+
+        // Basic Info
         this.propertyName = propertyName;
         this.streetAddress = streetAddress;
         this.propertyOwner = propertyOwner;
         this.inspectorName = inspectorName;
         this.inspectionDate = inspectionDate;
         this.inspectionId = inspectionId;
+
+        // Feature Inspection
+        // TO BE ADDED LATER
+
+        // General Assessment
+        this.overallCondition = overallCondition;
+        this.comments = comments;
+        this.advice = advice;
+        this.followUpActivity = followUpActivity;
     }
 
     // Collect info from user
@@ -58,7 +79,7 @@ public class Form {
             inspections.add(this);
             saveToFile();
 
-            System.out.println("\n✅ Inspection Recorded Successfully!");
+            System.out.println("Inspection Recorded Successfully!");
             System.out.println(propertyName + " owned by " + propertyOwner);
             System.out.println("Located at " + streetAddress);
             System.out.println("Inspected by " + inspector.getInspectorName() + " on " + inspectionDate);
@@ -68,6 +89,33 @@ public class Form {
             System.out.println(" Error while reading input.");
         }
     }
+
+    public void featureInspection() {
+        // TO BE ADDED LATER
+    }
+
+    public void generalAssessment() {
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+            // Eventually, change this to a drop-down menu of the condition codes (NV, E, VG, G, P, VP)
+            System.out.print("Overall Condition: ");
+            overallCondition = reader.readLine();
+
+            System.out.print("Comments: ");
+            comments = reader.readLine();
+
+            System.out.print("Advice: ");
+            advice = reader.readLine();
+
+            System.out.print("Follow Up Activity: ");
+            followUpActivity = reader.readLine();
+
+        } catch (IOException e) {
+            System.out.println(" Error while reading input.");
+        }
+    }
+
 
     // Save all inspections to text file
     private static void saveToFile() {
@@ -132,13 +180,22 @@ public class Form {
         }
     }
 
-    // Getters
+    // Getters: Basic Info
     public String getPropertyName() { return propertyName; }
     public String getStreetAddress() { return streetAddress; }
     public String getPropertyOwner() { return propertyOwner; }
     public String getInspectorName() { return inspectorName; }
     public String getInspectionDate() { return inspectionDate; }
     public String getInspectionId() { return inspectionId; }
+    
+    // Getters: Feature Inspections
+    // TO BE ADDED LATER
+
+    // Getters: General Assessment
+    public String getOverallCondition() { return overallCondition; }
+    public String getComments() { return comments; }
+    public String getAdvice() { return advice; }
+    public String getFollowUpActivity() { return followUpActivity; }
 
     // Menu
     public static void main(String[] args) {

@@ -43,28 +43,7 @@ public class FileReader extends JPanel implements ActionListener{
         return b;
     }
 
-    public static void main(String[] args) {
-
-        // Get file path from FileBrowser
-        File selectedFile = FileBrowser.selectFile();
-        
-        if (selectedFile == null) {
-            System.out.println("No file selected. Exiting.");
-            return;
-        }
-        
-        String filePath = selectedFile.getAbsolutePath();
-        System.out.println("Selected file: " + filePath);
-        
-        // Collect user input using Form
-        Form form = new Form();
-        form.basicInfo();
-        
-        // Write collected data to the selected Excel file
-        writeBasicInfo(filePath, form);
-        writeFeatureInspections(filePath, form);
-        writeGeneralAssessment(filePath, form);
-    }
+    
     
     /**
      * Writes basic info collected from Form to the Excel file
@@ -132,5 +111,30 @@ public class FileReader extends JPanel implements ActionListener{
             System.err.println("Error writing cell: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+
+        // Get file path from FileBrowser
+        File selectedFile = FileBrowser.selectFile();
+        
+        if (selectedFile == null) {
+            System.out.println("No file selected. Exiting.");
+            return;
+        }
+        
+        String filePath = selectedFile.getAbsolutePath();
+        System.out.println("Selected file: " + filePath);
+        
+        // Collect user input using Form
+        Form form = new Form();
+        form.basicInfo();
+        form.featureInspection();
+        form.generalAssessment();
+        
+        // Write collected data to the selected Excel file
+        writeBasicInfo(filePath, form);
+        writeFeatureInspections(filePath, form);
+        writeGeneralAssessment(filePath, form);
     }
 }

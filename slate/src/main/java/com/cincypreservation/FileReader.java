@@ -43,33 +43,14 @@ public class FileReader extends JPanel implements ActionListener{
         return b;
     }
 
-    public static void main(String[] args) {
-
-        // Get file path from FileBrowser
-        File selectedFile = FileBrowser.selectFile();
-        
-        if (selectedFile == null) {
-            System.out.println("No file selected. Exiting.");
-            return;
-        }
-        
-        String filePath = selectedFile.getAbsolutePath();
-        System.out.println("Selected file: " + filePath);
-        
-        // Collect user input using Form
-        Form form = new Form();
-        form.basicInfo();
-        
-        // Write basic info to the selected Excel file
-        writeBasicInfo(filePath, form);
-    }
+    
     
     /**
      * Writes basic info collected from Form to the Excel file
      * @param filePath The path to the Excel file
      * @param form The Form object containing collected data
      */
-    public static void writeBasicInfo(String filePath, Form form) {
+    public static void writeBasicInfo(String filePath, Form form) {    
         // Write property information to cells in column B
         writeCell(filePath, 0, 0, 1, form.getPropertyName());      // B1 - Property Name
         writeCell(filePath, 0, 1, 1, form.getStreetAddress());     // B2 - Property Address
@@ -83,6 +64,19 @@ public class FileReader extends JPanel implements ActionListener{
         System.out.println("All basic information written to Excel file.");
     }
     
+    public static void writeFeatureInspections(String filePath, Form form) {    
+        // TO BE ADDED LATER
+    }
+
+    public static void writeGeneralAssessment(String filePath, Form form) {        
+        // Write general assessment information to cells in column B
+        writeCell(filePath, 0, 6, 1, form.getOverallCondition());   // B7 - Overall Condition
+        writeCell(filePath, 0, 7, 1, form.getComments());           // B8 - Comments
+        writeCell(filePath, 0, 8, 1, form.getAdvice());             // B9 - Advice
+        writeCell(filePath, 0, 9, 1, form.getFollowUpActivity());   // B10 - Follow-Up Activity
+     
+        System.out.println("All general assessment information written to Excel file.");
+    }
     
     /**
      * Writes a value to a specific cell in the Excel file
@@ -117,5 +111,30 @@ public class FileReader extends JPanel implements ActionListener{
             System.err.println("Error writing cell: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+
+        // Get file path from FileBrowser
+        File selectedFile = FileBrowser.selectFile();
+        
+        if (selectedFile == null) {
+            System.out.println("No file selected. Exiting.");
+            return;
+        }
+        
+        String filePath = selectedFile.getAbsolutePath();
+        System.out.println("Selected file: " + filePath);
+        
+        // Collect user input using Form
+        Form form = new Form();
+        form.basicInfo();
+        form.featureInspection();
+        form.generalAssessment();
+        
+        // Write collected data to the selected Excel file
+        writeBasicInfo(filePath, form);
+        writeFeatureInspections(filePath, form);
+        writeGeneralAssessment(filePath, form);
     }
 }

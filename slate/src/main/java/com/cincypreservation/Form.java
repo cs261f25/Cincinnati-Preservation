@@ -1,8 +1,18 @@
 package com.cincypreservation;
 
+import java.util.ArrayList;
+
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 
-public class Form {
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class Form extends JPanel implements ActionListener {
 
     // Fields: Basic Info
     private String propertyName;
@@ -21,6 +31,11 @@ public class Form {
     private String advice;
     private String followUpActivity;
 
+    // Fields: UI Components
+    private JButton filebrowsebutton, submitbutton;
+    private ArrayList<JButton> buttons;
+    private Dimension BUTTON_DIMENSIONS = new Dimension(200,50);
+    private JTextField propertyNameBox;
 
     // Constructor
     public Form() {}
@@ -46,6 +61,36 @@ public class Form {
         this.comments = comments;
         this.advice = advice;
         this.followUpActivity = followUpActivity;
+    }
+
+    private void initializeGUI(){
+        filebrowsebutton = initializeButton(filebrowsebutton, "Browse for an Excel File");
+        submitbutton = initializeButton(submitbutton, "Submit Field Information");
+        for (JButton b : buttons){
+            add(b);
+        }
+        propertyNameBox = new JTextField(20);
+        add(new JLabel("Property Name"));
+        add(propertyNameBox);
+    }
+
+    private JButton initializeButton(JButton b,String label){
+        b = new JButton(label);
+        b.setPreferredSize(BUTTON_DIMENSIONS);
+        b.setActionCommand(label);
+        b.addActionListener(this);
+        buttons.add(b);
+        return b;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Object o = e.getSource();
+        if (o == filebrowsebutton) {
+            new FileReader().main(null);
+        } else if (o == submitbutton) {
+            
+        }        
     }
 
     // Collect info from user

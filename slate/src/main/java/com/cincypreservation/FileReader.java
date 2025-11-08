@@ -103,4 +103,14 @@ public class FileReader {
         writeFeatureInspections(filePath, form);
         writeGeneralAssessment(filePath, form);
     }
+
+    /**
+     * Helper method to write to form
+     * @author Joshua Bagcat
+     */
+    public static void writeForm(String filePath, Form form){
+        writeBasicInfo(filePath, form);
+        writeFeatureInspections(filePath, form);
+        writeGeneralAssessment(filePath, form);
+    }
 }

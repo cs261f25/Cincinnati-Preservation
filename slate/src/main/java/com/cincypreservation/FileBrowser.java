@@ -54,7 +54,7 @@ public class FileBrowser extends JPanel implements ActionListener {
      * @return The selected File, or null if cancelled
      */
     public static File selectFile() {
-        JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory() + "\\Documents");
         FileFilter filter = new FileNameExtensionFilter("Excel Files", "xls", "xlsx");
         j.addChoosableFileFilter(filter);
 

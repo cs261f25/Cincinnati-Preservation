@@ -1,18 +1,7 @@
 package com.cincypreservation;
 
-import java.util.ArrayList;
-
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.*;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-public class Form extends JPanel implements ActionListener {
+public class Form {
 
     // Fields: Basic Info
     private String propertyName;
@@ -31,14 +20,23 @@ public class Form extends JPanel implements ActionListener {
     private String advice;
     private String followUpActivity;
 
-    // Fields: UI Components
-    private JButton filebrowsebutton, submitbutton;
-    private ArrayList<JButton> buttons;
-    private Dimension BUTTON_DIMENSIONS = new Dimension(200,50);
-    private JTextField propertyNameBox;
-
     // Constructor
-    public Form() {}
+    // Default Constructor @author Joshua Bagcat
+    public Form() {
+        // Basic Info
+        this.propertyName = "Lorem";
+        this.streetAddress = "Ipsum";
+        this.propertyOwner = "Dolor";
+        this.inspectorName = "Sit";
+        this.inspectionDate = "01011970";
+        this.inspectionId = "INSP-" + System.currentTimeMillis();
+        InspectorInfo inspector = new InspectorInfo(inspectorName, inspectionId);
+
+        // Feature Inspection
+        // TO BE ADDED LATER
+
+        // General Assessment - Not required yet for testing purposes
+    }
 
     public Form(String propertyName, String streetAddress, String propertyOwner,
                 String inspectorName, String inspectionDate, String inspectionId,
@@ -61,36 +59,6 @@ public class Form extends JPanel implements ActionListener {
         this.comments = comments;
         this.advice = advice;
         this.followUpActivity = followUpActivity;
-    }
-
-    private void initializeGUI(){
-        filebrowsebutton = initializeButton(filebrowsebutton, "Browse for an Excel File");
-        submitbutton = initializeButton(submitbutton, "Submit Field Information");
-        for (JButton b : buttons){
-            add(b);
-        }
-        propertyNameBox = new JTextField(20);
-        add(new JLabel("Property Name"));
-        add(propertyNameBox);
-    }
-
-    private JButton initializeButton(JButton b,String label){
-        b = new JButton(label);
-        b.setPreferredSize(BUTTON_DIMENSIONS);
-        b.setActionCommand(label);
-        b.addActionListener(this);
-        buttons.add(b);
-        return b;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        Object o = e.getSource();
-        if (o == filebrowsebutton) {
-            new FileReader().main(null);
-        } else if (o == submitbutton) {
-            
-        }        
     }
 
     // Collect info from user
@@ -155,7 +123,6 @@ public class Form extends JPanel implements ActionListener {
     public String getInspectorName() { return inspectorName; }
     public String getInspectionDate() { return inspectionDate; }
     public String getInspectionId() { return inspectionId; }
-    
     // Getters: Feature Inspections
     // TO BE ADDED LATER
 
@@ -165,4 +132,10 @@ public class Form extends JPanel implements ActionListener {
     public String getAdvice() { return advice; }
     public String getFollowUpActivity() { return followUpActivity; }
 
+    // Setters: Basic Info
+    public void setPropertyName(String propertyName) { this.propertyName = propertyName; }
+    public void setStreetAddress(String streetAdress) { this.streetAddress = streetAdress; }
+    public void setPropertyOwner(String propertyOwner) { this.propertyOwner = propertyOwner; }
+    public void setInspectorName(String inspectorName) { this.inspectorName = inspectorName; }
+    public void setInspectionDate(String inspectionDate) { this.inspectionDate = inspectionDate; }
 }

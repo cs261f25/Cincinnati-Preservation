@@ -56,7 +56,9 @@ public class Form {
     private String followUpActivity;
 
     // Constructor
-    public Form() {}
+    public Form() {
+        this.features = new ArrayList<>();  //Initialize Feature list
+    }
 
     public Form(String propertyName, String streetAddress, String propertyOwner,
                 String inspectorName, String inspectionDate, String inspectionId,

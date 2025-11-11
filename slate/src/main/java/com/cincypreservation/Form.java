@@ -1,6 +1,7 @@
 package com.cincypreservation;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Form {
@@ -71,7 +72,7 @@ public class Form {
         this.inspectionId = inspectionId;
 
         // Feature Inspection
-        // TO BE ADDED LATER
+        this.features = new ArrayList<>();  //Initialize Feature list
 
         // General Assessment
         this.overallCondition = overallCondition;

@@ -165,7 +165,9 @@ public class Form {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-            // Eventually, change this to a drop-down menu of the condition codes (NV, E, VG, G, P, VP)
+            // User should enter one of the following for the condition field.
+            // For now, leave this as String input, but consider changing to dropdown in next sprint
+            // NV: not visible | E: excellent | VG: very good | G: good | P: poor | VP: very poor            
             System.out.print("Overall Condition: ");
             overallCondition = reader.readLine();
 

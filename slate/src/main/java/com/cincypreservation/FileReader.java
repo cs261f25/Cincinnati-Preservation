@@ -30,10 +30,37 @@ public class FileReader {
         System.out.println("All basic information written to Excel file.");
     }
     
-    public static void writeFeatureInspections(String filePath, Form form) {    
-        // TO BE ADDED LATER
+    /**
+     * Writes feature inspection info collected from Form to the Excel file
+     * @param filePath The path to the Excel file
+     * @param form The Form object containing collected data
+     */
+    public static void writeFeatureInspections(String filePath, Form form) {
+        // Get the list of Features from the form
+        java.util.List<Form.Feature> features = form.getFeatures();
+
+        // Write values from Features, starting at row 15 (index 14), the first row designated for Features in the spreadsheet
+        int startRow = 14;
+        for (int i = 0; i < features.size(); i++) {
+            Form.Feature feature = features.get(i);
+            int row = startRow + i;
+
+            writeCell(filePath, 0, row, 0, feature.getFeatureName());           // Column A - Feature Name
+            writeCell(filePath, 0, row, 1, feature.getFeatureDescription());    // Column B - Feature Description
+            writeCell(filePath, 0, row, 2, feature.getNorthCondition());        // Column C - North Condition
+            writeCell(filePath, 0, row, 3, feature.getEastCondition());         // Column D - East Condition
+            writeCell(filePath, 0, row, 4, feature.getSouthCondition());        // Column E - South Condition
+            writeCell(filePath, 0, row, 5, feature.getWestCondition());         // Column F - West Condition
+        }
+
+        System.out.println(features.size() + " feature(s) written to Excel file.");
     }
 
+    /**
+     * Writes general assessment info collected from Form to the Excel file
+     * @param filePath The path to the Excel file
+     * @param form The Form object containing collected data
+     */
     public static void writeGeneralAssessment(String filePath, Form form) {        
         // Write general assessment information to cells in column B
         writeCell(filePath, 0, 6, 1, form.getOverallCondition());   // B7 - Overall Condition

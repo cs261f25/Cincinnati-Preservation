@@ -1,6 +1,9 @@
 package com.cincypreservation;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Form {
 
     // Fields: Basic Info
@@ -11,8 +14,40 @@ public class Form {
     private String inspectionDate;
     private String inspectionId;
 
-    // Fields: Feature Inspection
-    // TO BE ADDED LATER
+    // Fields: Feature Inspection - list of Feature objects, each with its own fields
+    private List<Feature> features;
+
+    // Nested class for a Feature object, with all needed Feature fields
+    public static class Feature {
+        
+        // Fields for Feature object
+        private String featureName;
+        private String featureDescription;
+        private String northCondition;
+        private String eastCondition;
+        private String southCondition;
+        private String westCondition;
+
+        // Constructor for Feature object
+        public Feature(String featureName, String featureDescription, 
+                      String northCondition, String eastCondition, 
+                      String southCondition, String westCondition) {
+            this.featureName = featureName;
+            this.featureDescription = featureDescription;
+            this.northCondition = northCondition;
+            this.eastCondition = eastCondition;
+            this.southCondition = southCondition;
+            this.westCondition = westCondition;
+            }
+
+        // Getters for Feature object
+        public String getFeatureName() { return featureName; }
+        public String getFeatureDescription() { return featureDescription; }
+        public String getNorthCondition() { return northCondition; }
+        public String getEastCondition() { return eastCondition; }
+        public String getSouthCondition() { return southCondition; }
+        public String getWestCondition() { return westCondition; }  
+    }
 
     // Fields: General Assessment
     private String overallCondition;
@@ -33,7 +68,7 @@ public class Form {
         InspectorInfo inspector = new InspectorInfo(inspectorName, inspectionId);
 
         // Feature Inspection
-        // TO BE ADDED LATER
+        this.features = new ArrayList<>();  //Initialize Feature list
 
         // General Assessment - Not required yet for testing purposes
     }
@@ -52,7 +87,7 @@ public class Form {
         this.inspectionId = inspectionId;
 
         // Feature Inspection
-        // TO BE ADDED LATER
+        this.features = new ArrayList<>();  //Initialize Feature list
 
         // General Assessment
         this.overallCondition = overallCondition;
@@ -91,14 +126,61 @@ public class Form {
     }
 
     public void featureInspection() {
-        // TO BE ADDED LATER
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            
+            while (true) {
+                System.out.println("--- Add Feature ---");
+                
+                System.out.print("Feature Name: ");
+                String featureName = reader.readLine();
+                
+                System.out.print("Feature Description: ");
+                String featureDescription = reader.readLine();
+                
+                // User should enter one of the following for the condition fields.
+                // For now, leave this as String input, but consider changing to dropdown in next sprint
+                // NV: not visible | E: excellent | VG: very good | G: good | P: poor | VP: very poor
+
+                System.out.print("North Condition: ");
+                String northCondition = reader.readLine();
+                
+                System.out.print("East Condition: ");
+                String eastCondition = reader.readLine();
+                
+                System.out.print("South Condition: ");
+                String southCondition = reader.readLine();
+                
+                System.out.print("West Condition: ");
+                String westCondition = reader.readLine();
+                
+                // Add the Feature to the list
+                features.add(new Feature(featureName, featureDescription, 
+                                        northCondition, eastCondition, 
+                                        southCondition, westCondition));
+                
+                System.out.print("Inspect another feature? (y/n): ");
+                String response = reader.readLine();
+                
+                if (!response.equalsIgnoreCase("y")) {
+                    break;
+                }
+            }
+            
+            System.out.println(features.size() + " feature(s) recorded.");
+            
+        } catch (IOException e) {
+            System.out.println(" Error while reading input.");
+        }
     }
 
     public void generalAssessment() {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-            // Eventually, change this to a drop-down menu of the condition codes (NV, E, VG, G, P, VP)
+            // User should enter one of the following for the condition field.
+            // For now, leave this as String input, but consider changing to dropdown in next sprint
+            // NV: not visible | E: excellent | VG: very good | G: good | P: poor | VP: very poor            
             System.out.print("Overall Condition: ");
             overallCondition = reader.readLine();
 
@@ -124,7 +206,7 @@ public class Form {
     public String getInspectionDate() { return inspectionDate; }
     public String getInspectionId() { return inspectionId; }
     // Getters: Feature Inspections
-    // TO BE ADDED LATER
+    public List<Feature> getFeatures() { return features; }
 
     // Getters: General Assessment
     public String getOverallCondition() { return overallCondition; }

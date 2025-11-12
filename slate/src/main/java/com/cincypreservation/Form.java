@@ -174,6 +174,10 @@ public class Form {
         }
     }
 
+    public void addFeature(Feature f){
+        features.add(f);
+    }
+
     public void generalAssessment() {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -225,5 +229,5 @@ public class Form {
     public void setOverallCondition(String overallCondition) { this.overallCondition = overallCondition; }
     public void setComments(String comments) { this.comments = comments; }
     public void setAdvice(String advice) { this.advice = advice; }
-    public void setFollowUpActivity(String followUpActivity) {this.followUpActivity = followUpActivity; } 
+    public void setFollowUpActivity(String followUpActivity) {this.followUpActivity = followUpActivity; }
 }

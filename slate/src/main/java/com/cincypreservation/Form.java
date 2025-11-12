@@ -138,4 +138,10 @@ public class Form {
     public void setPropertyOwner(String propertyOwner) { this.propertyOwner = propertyOwner; }
     public void setInspectorName(String inspectorName) { this.inspectorName = inspectorName; }
     public void setInspectionDate(String inspectionDate) { this.inspectionDate = inspectionDate; }
+
+    // Setters: General Assessment
+    public void setOverallCondition(String overallCondition) { this.overallCondition = overallCondition; }
+    public void setComments(String comments) { this.comments = comments; }
+    public void setAdvice(String advice) { this.advice = advice; }
+    public void setFollowUpActivity(String followUpActivity) {this.followUpActivity = followUpActivity; } 
 }

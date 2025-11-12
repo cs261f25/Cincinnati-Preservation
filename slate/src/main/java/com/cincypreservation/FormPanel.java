@@ -35,8 +35,12 @@ public class FormPanel extends JPanel implements ActionListener {
     private void initializeGUI(){
         // Layout
         setLayout(new GridBagLayout());
-        JPanel centerPanel = new JPanel();
-        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+        JPanel contentPanel = new JPanel();
+        JPanel infopanel = new JPanel();
+        JPanel assessmentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        infopanel.setLayout(new BoxLayout(infopanel, BoxLayout.Y_AXIS));
+        assessmentPanel.setLayout(new BoxLayout(assessmentPanel, BoxLayout.Y_AXIS));
         // UI elements
         b1 = initializeButton(b1, "Choose Excel File");
         b2 = initializeButton(b2, "Write to Excel File");
@@ -56,45 +60,51 @@ public class FormPanel extends JPanel implements ActionListener {
         followUpActivityField = initializTextField(followUpActivityField);
 
         // Panel Construction
-        centerPanel.add(createJLabelOnCenter("File Writer - Write to Excel Form"));
-        centerPanel.add(b1);
-        centerPanel.add(filepathgui);
-        centerPanel.add(createJLabelOnCenter("Fill out Form information Below"));
-        centerPanel.add(Box.createRigidArea(new Dimension(5,15)));
+        contentPanel.add(createJLabelOnCenter("File Writer - Write to Excel Form"));
+        contentPanel.add(b1);
+        contentPanel.add(filepathgui);
+        contentPanel.add(createJLabelOnCenter("Fill out Form information Below"));
+        contentPanel.add(Box.createRigidArea(new Dimension(5,15)));
 
         JLabel title1 = createJLabelOnCenter("I - General Information");
         title1.setFont(bold);
-        centerPanel.add(title1);
+        infopanel.add(title1);
 
-        centerPanel.add(createJLabelOnCenter("Property Name"));
-        centerPanel.add(propertyNameField);
-        centerPanel.add(createJLabelOnCenter("Street Address"));
-        centerPanel.add(streetAddressField);
-        centerPanel.add(createJLabelOnCenter("Property Owner"));
-        centerPanel.add(propertyOwnerField);
-        centerPanel.add(createJLabelOnCenter("Inspector Name"));
-        centerPanel.add(inspectorNameField);
-        centerPanel.add(createJLabelOnCenter("Inspection Date (MM/DD/YYYY)"));
-        centerPanel.add(inspectionDateField);
-        centerPanel.add(Box.createRigidArea(new Dimension(5,15)));
+        infopanel.add(createJLabelOnCenter("Property Name"));
+        infopanel.add(propertyNameField);
+        infopanel.add(createJLabelOnCenter("Street Address"));
+        infopanel.add(streetAddressField);
+        infopanel.add(createJLabelOnCenter("Property Owner"));
+        infopanel.add(propertyOwnerField);
+        infopanel.add(createJLabelOnCenter("Inspector Name"));
+        infopanel.add(inspectorNameField);
+        infopanel.add(createJLabelOnCenter("Inspection Date (MM/DD/YYYY)"));
+        infopanel.add(inspectionDateField);
+        infopanel.add(Box.createRigidArea(new Dimension(5,15)));
 
         JLabel title2 = createJLabelOnCenter("II - General Assessment");
         title2.setFont(bold);
-        centerPanel.add(title2);
+        assessmentPanel.add(title2);
 
-        centerPanel.add(createJLabelOnCenter("Overall Condition"));
-        centerPanel.add(overallConditionField);
-        centerPanel.add(createJLabelOnCenter("Comments"));
-        centerPanel.add(commentsField);
-        centerPanel.add(createJLabelOnCenter("Advice"));
-        centerPanel.add(adviceField);
-        centerPanel.add(createJLabelOnCenter("Follow Up Activity"));
-        centerPanel.add(followUpActivityField);
-        centerPanel.add(Box.createRigidArea(new Dimension(5,15)));
+        assessmentPanel.add(createJLabelOnCenter("Overall Condition"));
+        assessmentPanel.add(overallConditionField);
+        assessmentPanel.add(createJLabelOnCenter("Comments"));
+        assessmentPanel.add(commentsField);
+        assessmentPanel.add(createJLabelOnCenter("Advice"));
+        assessmentPanel.add(adviceField);
+        assessmentPanel.add(createJLabelOnCenter("Follow Up Activity"));
+        assessmentPanel.add(followUpActivityField);
+        assessmentPanel.add(Box.createRigidArea(new Dimension(5,15)));
 
-        centerPanel.add(b2);
+        JPanel fieldPanel = new JPanel();
+        fieldPanel.setLayout(new BoxLayout(fieldPanel, BoxLayout.X_AXIS));
+        fieldPanel.add(infopanel);
+        fieldPanel.add(Box.createRigidArea(new Dimension(25,25)));
+        fieldPanel.add(assessmentPanel);
 
-        add(centerPanel);
+        contentPanel.add(fieldPanel);
+        contentPanel.add(b2);
+        add(contentPanel);
     }
 
     @Override

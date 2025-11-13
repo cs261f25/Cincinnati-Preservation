@@ -3,46 +3,14 @@ package com.cincypreservation;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.util.ArrayList;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+public class FileReader {
 
-import java.awt.event.*;
-import java.awt.*;
-import javax.swing.JButton;
-import javax.swing.JPanel;
+    public FileReader(){}
 
-public class FileReader extends JPanel implements ActionListener{
-    private JButton b1;
-    private ArrayList<JButton> buttons = new ArrayList<>();
-    private Dimension BUTTON_DIMENSIONS = new Dimension(200,50);
-    public FileReader(){
-        initialize();
-    }
-    private void initialize(){
-        b1 = initializeButton(b1, "Launch File Reader");
-        add(b1);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        Object o = e.getSource();
-        if (o == b1) {
-            main(null);
-        }
-    }
-
-    private JButton initializeButton(JButton b,String label){
-        b = new JButton(label);
-        b.setPreferredSize(BUTTON_DIMENSIONS);
-        b.setActionCommand(label);
-        b.addActionListener(this);
-        buttons.add(b);
-        return b;
-    }
-    
     /**
      * Writes basic info collected from Form to the Excel file
      * @param filePath The path to the Excel file
@@ -158,6 +126,16 @@ public class FileReader extends JPanel implements ActionListener{
         form.generalAssessment();
         
         // Write collected data to the selected Excel file
+        writeBasicInfo(filePath, form);
+        writeFeatureInspections(filePath, form);
+        writeGeneralAssessment(filePath, form);
+    }
+
+    /**
+     * Helper method to write to form
+     * @author Joshua Bagcat
+     */
+    public static void writeForm(String filePath, Form form){
         writeBasicInfo(filePath, form);
         writeFeatureInspections(filePath, form);
         writeGeneralAssessment(filePath, form);

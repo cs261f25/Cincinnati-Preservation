@@ -161,6 +161,10 @@ public class Form {
         }
     }
 
+    public void addFeature(Feature f){
+        features.add(f);
+    }
+
     public void generalAssessment() {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -192,7 +196,6 @@ public class Form {
     public String getInspectorName() { return inspectorName; }
     public String getInspectionDate() { return inspectionDate; }
     public String getInspectionId() { return inspectionId; }
-    
     // Getters: Feature Inspections
     public List<Feature> getFeatures() { return features; }
 
@@ -202,4 +205,16 @@ public class Form {
     public String getAdvice() { return advice; }
     public String getFollowUpActivity() { return followUpActivity; }
 
+    // Setters: Basic Info
+    public void setPropertyName(String propertyName) { this.propertyName = propertyName; }
+    public void setStreetAddress(String streetAdress) { this.streetAddress = streetAdress; }
+    public void setPropertyOwner(String propertyOwner) { this.propertyOwner = propertyOwner; }
+    public void setInspectorName(String inspectorName) { this.inspectorName = inspectorName; }
+    public void setInspectionDate(String inspectionDate) { this.inspectionDate = inspectionDate; }
+
+    // Setters: General Assessment
+    public void setOverallCondition(String overallCondition) { this.overallCondition = overallCondition; }
+    public void setComments(String comments) { this.comments = comments; }
+    public void setAdvice(String advice) { this.advice = advice; }
+    public void setFollowUpActivity(String followUpActivity) {this.followUpActivity = followUpActivity; }
 }

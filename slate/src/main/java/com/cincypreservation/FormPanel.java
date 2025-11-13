@@ -48,7 +48,7 @@ public class FormPanel extends JPanel implements ActionListener {
         // UI elements
         b1 = initializeButton(b1, "Choose Excel File");
         b2 = initializeButton(b2, "Write to Excel File");
-        b3 = initializeButton(b3, "Fill Fields with Lorem Ipsum");
+        // b3 = initializeButton(b3, "Fill Fields with Lorem Ipsum");
         b4 = initializeButton(b4, "Clear all Fields");
         filepathgui = initializeJLabel(filepathgui, "File Path: No file selected");
 
@@ -133,7 +133,7 @@ public class FormPanel extends JPanel implements ActionListener {
         fieldPanel.add(Box.createRigidArea(new Dimension(25,25)));
 
         contentPanel.add(fieldPanel);
-        contentPanel.add(b3);
+        // contentPanel.add(b3);
         contentPanel.add(b4);
         contentPanel.add(b2);
         add(contentPanel);

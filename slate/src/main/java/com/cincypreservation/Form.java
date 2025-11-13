@@ -211,6 +211,7 @@ public class Form {
     public void setPropertyOwner(String propertyOwner) { this.propertyOwner = propertyOwner; }
     public void setInspectorName(String inspectorName) { this.inspectorName = inspectorName; }
     public void setInspectionDate(String inspectionDate) { this.inspectionDate = inspectionDate; }
+    public void setInspectionId(String inspectionId) {this.inspectionId = inspectionId; }
 
     // Setters: General Assessment
     public void setOverallCondition(String overallCondition) { this.overallCondition = overallCondition; }

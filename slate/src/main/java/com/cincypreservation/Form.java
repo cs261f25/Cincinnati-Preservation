@@ -1,12 +1,21 @@
 package com.cincypreservation;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+<<<<<<< Updated upstream
 import java.util.List;
 
 public class Form {
 
     // Fields: Basic Info
+=======
+
+public class Form {
+
+    // Fields
+>>>>>>> Stashed changes
     private String propertyName;
     private String streetAddress;
     private String propertyOwner;
@@ -103,16 +112,44 @@ public class Form {
             System.out.print("Inspection Date (MM/DD/YYYY): ");
             inspectionDate = reader.readLine();
 
+<<<<<<< Updated upstream
             // Create inspection ID and inspector object
             inspectionId = "INSP-" + System.currentTimeMillis();
             InspectorInfo inspector = new InspectorInfo(inspectorName, inspectionId);
 
+=======
+            // Auto-generate ID
+            inspectionId = "INSP-" + System.currentTimeMillis();
+            InspectorInfo inspector = new InspectorInfo(inspectorName, inspectionId);
+
+            // Load existing inspections
+            ArrayList<Form> allInspections = InspectionFileManager.loadInspections();
+
+            // Add new one
+            allInspections.add(this);
+
+            // Save back to file
+            InspectionFileManager.saveInspections(allInspections);
+
+            System.out.println("\n✅ Inspection Recorded Successfully!");
+            System.out.println(propertyName + " owned by " + propertyOwner);
+            System.out.println("Located at " + streetAddress);
+            System.out.println("Inspected by " + inspector.getInspectorName() +
+                    " on " + inspectionDate);
+            System.out.println(inspector.toString());
+
+>>>>>>> Stashed changes
         } catch (IOException e) {
             System.out.println(" Error while reading input.");
         }
     }
 
+<<<<<<< Updated upstream
     public void featureInspection() {
+=======
+    // Look up a property
+    public static void lookupProperty() {
+>>>>>>> Stashed changes
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             
@@ -129,6 +166,7 @@ public class Form {
                 // For now, leave this as String input, but consider changing to dropdown in next sprint
                 // NV: not visible | E: excellent | VG: very good | G: good | P: poor | VP: very poor
 
+<<<<<<< Updated upstream
                 System.out.print("North Condition: ");
                 String northCondition = reader.readLine();
                 
@@ -156,6 +194,29 @@ public class Form {
             
             System.out.println(features.size() + " feature(s) recorded.");
             
+=======
+            ArrayList<Form> allInspections = InspectionFileManager.loadInspections();
+            boolean found = false;
+
+            for (Form form : allInspections) {
+                if (form.getPropertyName().equalsIgnoreCase(searchName)) {
+                    System.out.println("\nInspection Found:");
+                    System.out.println("------------------");
+                    System.out.println("Property: " + form.getPropertyName());
+                    System.out.println("Address: " + form.getStreetAddress());
+                    System.out.println("Owner: " + form.getPropertyOwner());
+                    System.out.println("Inspector: " + form.getInspectorName());
+                    System.out.println("Date: " + form.getInspectionDate());
+                    System.out.println("Inspection ID: " + form.getInspectionId());
+                    found = true;
+                }
+            }
+
+            if (!found) {
+                System.out.println("No inspections found for property: " + searchName);
+            }
+
+>>>>>>> Stashed changes
         } catch (IOException e) {
             System.out.println(" Error while reading input.");
         }
@@ -199,11 +260,16 @@ public class Form {
     // Getters: Feature Inspections
     public List<Feature> getFeatures() { return features; }
 
+<<<<<<< Updated upstream
     // Getters: General Assessment
     public String getOverallCondition() { return overallCondition; }
     public String getComments() { return comments; }
     public String getAdvice() { return advice; }
     public String getFollowUpActivity() { return followUpActivity; }
+=======
+    // Menu
+    public static void main(String[] args) {
+>>>>>>> Stashed changes
 
     // Setters: Basic Info
     public void setPropertyName(String propertyName) { this.propertyName = propertyName; }

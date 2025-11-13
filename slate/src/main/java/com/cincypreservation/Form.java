@@ -56,21 +56,8 @@ public class Form {
     private String followUpActivity;
 
     // Constructor
-    // Default Constructor @author Joshua Bagcat
     public Form() {
-        // Basic Info
-        this.propertyName = "Lorem";
-        this.streetAddress = "Ipsum";
-        this.propertyOwner = "Dolor";
-        this.inspectorName = "Sit";
-        this.inspectionDate = "01011970";
-        this.inspectionId = "INSP-" + System.currentTimeMillis();
-        InspectorInfo inspector = new InspectorInfo(inspectorName, inspectionId);
-
-        // Feature Inspection
         this.features = new ArrayList<>();  //Initialize Feature list
-
-        // General Assessment - Not required yet for testing purposes
     }
 
     public Form(String propertyName, String streetAddress, String propertyOwner,

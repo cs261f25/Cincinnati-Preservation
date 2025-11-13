@@ -193,6 +193,7 @@ public class FormPanel extends JPanel implements ActionListener {
             form.setPropertyOwner(propertyOwnerField.getText());
             form.setInspectorName(inspectorNameField.getText());
             form.setInspectionDate(inspectionDateField.getText());
+            form.setInspectionId("INSP-" + System.currentTimeMillis());
             // Set General Assessment
             form.setOverallCondition(overallConditionField.getText());
             form.setComments(commentsField.getText());

@@ -3,3 +3,4 @@ slate/target/
 .idea/
 *.class
 inspections.txt
+.iml

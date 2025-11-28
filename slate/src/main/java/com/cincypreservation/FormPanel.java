@@ -11,9 +11,13 @@ import java.awt.Label;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 import javax.swing.*;
+
+import org.apache.commons.math3.util.CentralPivotingStrategy;
 
 import java.io.File;
 
@@ -21,7 +25,8 @@ public class FormPanel extends JPanel implements ActionListener {
     private JButton b1,b2,b3,b4;
     private JTextField propertyNameField, streetAddressField, propertyOwnerField, inspectorNameField,inspectionDateField; // General Info Fields
     private JTextField overallConditionField, commentsField, adviceField, followUpActivityField; // General Assessment Fields
-    private JTextField featureNameField, featureDescriptionField, northConditionField, eastConditionField, southConditionField, westConditionField; // Feature Fields
+    private JTextField featureNameField, featureDescriptionField; // Feature Fields
+    private String northConditionField, eastConditionField, southConditionField, westConditionField; // Feature Fields II 
     private ArrayList<JTextField> textFields = new ArrayList<>();
     private JLabel filepathgui;
     private String filePath = "-1";
@@ -68,10 +73,10 @@ public class FormPanel extends JPanel implements ActionListener {
         // Feature Field
         featureNameField = initializTextField(featureNameField);
         featureDescriptionField = initializTextField(featureDescriptionField);
-        northConditionField = initializTextField(northConditionField);
-        eastConditionField = initializTextField(eastConditionField);
-        southConditionField = initializTextField(southConditionField);
-        westConditionField = initializTextField(westConditionField);
+        // northConditionField = initializTextField(northConditionField);
+        // eastConditionField = initializTextField(eastConditionField);
+        // southConditionField = initializTextField(southConditionField);
+        // westConditionField = initializTextField(westConditionField);
 
         // Panel Construction
         contentPanel.add(createJLabelOnCenter("File Writer - Write to Excel Form"));
@@ -79,7 +84,7 @@ public class FormPanel extends JPanel implements ActionListener {
         contentPanel.add(filepathgui);
         contentPanel.add(createJLabelOnCenter("Fill out Form information Below"));
 
-        JLabel title1 = createJLabelOnCenter("I - General Information");
+        JLabel title1 = createJLabelOnCenter("General Information");
         title1.setFont(bold);
         infopanel.add(title1);
 
@@ -94,7 +99,7 @@ public class FormPanel extends JPanel implements ActionListener {
         infopanel.add(createJLabelOnCenter("Inspection Date (MM/DD/YYYY)"));
         infopanel.add(inspectionDateField);
 
-        JLabel title2 = createJLabelOnCenter("II - General Assessment");
+        JLabel title2 = createJLabelOnCenter("General Assessment");
         title2.setFont(bold);
         assessmentPanel.add(title2);
 
@@ -107,22 +112,6 @@ public class FormPanel extends JPanel implements ActionListener {
         assessmentPanel.add(createJLabelOnCenter("Follow Up Activity"));
         assessmentPanel.add(followUpActivityField);
 
-        JLabel title3 = createJLabelOnCenter("III - Features");
-        title3.setFont(bold);
-        featurePanel.add(title3);
-        featurePanel.add(createJLabelOnCenter("Feature Name"));
-        featurePanel.add(featureNameField);
-        featurePanel.add(createJLabelOnCenter("Feature Description"));
-        featurePanel.add(featureDescriptionField);
-        featurePanel.add(createJLabelOnCenter("North Condition"));
-        featurePanel.add(northConditionField);
-        featurePanel.add(createJLabelOnCenter("South Condition"));
-        featurePanel.add(southConditionField);
-        featurePanel.add(createJLabelOnCenter("East Condition"));
-        featurePanel.add(eastConditionField);
-        featurePanel.add(createJLabelOnCenter("West Condition"));
-        featurePanel.add(westConditionField);
-
         JPanel fieldPanel = new JPanel();
         fieldPanel.setLayout(new BoxLayout(fieldPanel, BoxLayout.X_AXIS));
         fieldPanel.add(infopanel);
@@ -130,10 +119,8 @@ public class FormPanel extends JPanel implements ActionListener {
         fieldPanel.add(assessmentPanel);
         fieldPanel.add(Box.createRigidArea(new Dimension(25,25)));
         fieldPanel.add(featurePanel);
-        fieldPanel.add(Box.createRigidArea(new Dimension(25,25)));
 
         contentPanel.add(fieldPanel);
-        // contentPanel.add(b3);
         contentPanel.add(b4);
         contentPanel.add(b2);
         add(contentPanel);
@@ -148,7 +135,7 @@ public class FormPanel extends JPanel implements ActionListener {
         } else if (o == b2) {
             writeToForm(fr);
         } else if (o == b3) {
-            fillFieldsLoremIpsum();
+            addFeature();
         } else if (o == b4) {
             emptyFields();
         } 
@@ -199,15 +186,6 @@ public class FormPanel extends JPanel implements ActionListener {
             form.setComments(commentsField.getText());
             form.setAdvice(adviceField.getText());
             form.setFollowUpActivity(followUpActivityField.getText());
-            // Set Feature
-            Form.Feature feature = new Form.Feature(
-                featureNameField.getText(), 
-                featureDescriptionField.getText(), 
-                northConditionField.getText(), 
-                eastConditionField.getText(), 
-                southConditionField.getText(), 
-                westConditionField.getText());
-            form.addFeature(feature);
             // Write to Form
             fr.writeForm(filePath, form);
 
@@ -216,6 +194,92 @@ public class FormPanel extends JPanel implements ActionListener {
         }
     }
 
+    // Nested Class for Feature Panel, a panel with buttons that can perpetually add features to Form
+
+    public class FeaturePanel extends JPanel {
+        
+        public FeaturePanel(){
+            initializeGUI();
+        }
+        public void initializeGUI(){
+            setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+            JLabel title3 = createJLabelOnCenter("Add a Feature");
+            title3.setFont(bold);
+            add(title3);
+            add(createJLabelOnCenter("Feature Name"));
+            add(featureNameField);
+            add(createJLabelOnCenter("Feature Description"));
+            add(featureDescriptionField);
+            add(createJLabelOnCenter("North Condition"));
+            add(new checkBoxArrayPanel());
+            add(createJLabelOnCenter("South Condition"));
+            add(new checkBoxArrayPanel());
+            add(createJLabelOnCenter("East Condition"));
+            add(new checkBoxArrayPanel());
+            add(createJLabelOnCenter("West Condition"));
+            add(new checkBoxArrayPanel());
+            add(createJLabelOnCenter(""));
+        }
+        
+        public class checkBoxArrayPanel extends JPanel implements ItemListener {
+            public String output;
+            private JCheckBox nvBox,eBox,vgBox, gBox,pBox,vpBox;
+            private ArrayList<JCheckBox> checkboxes;
+            public checkBoxArrayPanel() {
+                setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+                checkboxes = new ArrayList<>();
+                nvBox = initializeJCheckBox("Not Visible");
+                eBox = initializeJCheckBox("Excellent");
+                vgBox = initializeJCheckBox("Very Good");
+                gBox = initializeJCheckBox("Good");
+                pBox = initializeJCheckBox("Poor");
+                vpBox = initializeJCheckBox("Very Poor");
+                add(nvBox);
+                add(eBox);
+                add(vgBox);
+                add(gBox);
+                add(pBox);
+                add(vpBox);
+            }
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                Object o = e.getSource();
+                int change = e.getStateChange();
+                if (o == nvBox){
+                    output = "nv";
+                } else if (o == eBox){
+                    output = "e";
+                } else if (o == vgBox){
+                    
+                } else if (o == gBox){
+                    //
+                } else if (o == pBox){
+                    //
+                } else if (o == vpBox){
+                    //
+                }
+                clearSelection();
+                System.out.println("Output: " + output);
+                
+            }
+            public JCheckBox initializeJCheckBox(String label){
+                JCheckBox c = new JCheckBox(label, null, false);
+                c.addItemListener(this);
+                c.setAlignmentX(CENTER_ALIGNMENT);
+                checkboxes.add(c);
+                return c;
+            }
+            public void clearSelection(){
+                for (JCheckBox checkBox : checkboxes){
+                    checkBox.setSelected(false);
+                }
+            }
+        }
+    }
+
+    public void addFeature(){
+
+    }
 
     // Helper methods for initializing UI components
 

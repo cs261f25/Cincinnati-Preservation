@@ -15,7 +15,7 @@ public class TabbedMenu extends JPanel {
         tabbedPane.addTab("File Writer", panel1);
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
-        JComponent panel2 = formPanel.new FeaturePanel();
+        JComponent panel2 = formPanel.new featurePanel();
         tabbedPane.addTab("Feature Adder", panel2);
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 

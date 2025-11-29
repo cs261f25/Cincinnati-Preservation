@@ -1,32 +1,30 @@
 package com.cincypreservation;
 
-import java.awt.BorderLayout;
-import java.awt.Desktop;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Label;
-import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
 import java.util.ArrayList;
 
-import javax.swing.*;
-
-import org.apache.commons.math3.util.CentralPivotingStrategy;
-
-import java.io.File;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 
 public class FormPanel extends JPanel implements ActionListener {
-    private JButton b1,b2,b3,b4;
+    private Form form;
+    private JButton getFileButton,draftButton,writeFormButton,emptyFieldsButton;
     private JTextField propertyNameField, streetAddressField, propertyOwnerField, inspectorNameField,inspectionDateField; // General Info Fields
     private JTextField overallConditionField, commentsField, adviceField, followUpActivityField; // General Assessment Fields
-    private JTextField featureNameField, featureDescriptionField; // Feature Fields
-    private String northConditionField, eastConditionField, southConditionField, westConditionField; // Feature Fields II 
     private ArrayList<JTextField> textFields = new ArrayList<>();
     private JLabel filepathgui;
     private String filePath = "-1";
@@ -36,6 +34,7 @@ public class FormPanel extends JPanel implements ActionListener {
     private final static Dimension BUTTON_DIMENSIONS = new Dimension(200,25);
     private final static Dimension TEXTBOX_DIMENSIONS = new Dimension(200,20);
     public FormPanel(){
+        form = new Form();
         initializeGUI();
     }
 
@@ -51,12 +50,12 @@ public class FormPanel extends JPanel implements ActionListener {
         assessmentPanel.setLayout(new BoxLayout(assessmentPanel, BoxLayout.Y_AXIS));
         featurePanel.setLayout(new BoxLayout(featurePanel, BoxLayout.Y_AXIS));
         // UI elements
-        b1 = initializeButton(b1, "Choose Excel File");
-        b2 = initializeButton(b2, "Write to Excel File");
-        // b3 = initializeButton(b3, "Fill Fields with Lorem Ipsum");
-        b4 = initializeButton(b4, "Clear all Fields");
+        getFileButton = initializeButton(getFileButton, "Choose Excel File");
+        draftButton = initializeButton(draftButton, "Draft Changes");
+        writeFormButton = initializeButton(writeFormButton, "Write Draft to Form");
+        emptyFieldsButton = initializeButton(emptyFieldsButton, "Clear all Fields");
         filepathgui = initializeJLabel(filepathgui, "File Path: No file selected");
-
+ 
         // Basic Info Field Initialization
         propertyNameField = initializTextField(propertyNameField);
         streetAddressField = initializTextField(streetAddressField);
@@ -64,23 +63,15 @@ public class FormPanel extends JPanel implements ActionListener {
         inspectorNameField = initializTextField(inspectorNameField);
         inspectionDateField = initializTextField(inspectionDateField);
 
-        // General Assessment Field (WIP: Will replace with check boxes)
+        // General Assessment Field 
         overallConditionField = initializTextField(overallConditionField);
         commentsField = initializTextField(commentsField);
         adviceField = initializTextField(adviceField);
         followUpActivityField = initializTextField(followUpActivityField);
 
-        // Feature Field
-        featureNameField = initializTextField(featureNameField);
-        featureDescriptionField = initializTextField(featureDescriptionField);
-        // northConditionField = initializTextField(northConditionField);
-        // eastConditionField = initializTextField(eastConditionField);
-        // southConditionField = initializTextField(southConditionField);
-        // westConditionField = initializTextField(westConditionField);
-
         // Panel Construction
         contentPanel.add(createJLabelOnCenter("File Writer - Write to Excel Form"));
-        contentPanel.add(b1);
+        contentPanel.add(getFileButton);
         contentPanel.add(filepathgui);
         contentPanel.add(createJLabelOnCenter("Fill out Form information Below"));
 
@@ -121,8 +112,9 @@ public class FormPanel extends JPanel implements ActionListener {
         fieldPanel.add(featurePanel);
 
         contentPanel.add(fieldPanel);
-        contentPanel.add(b4);
-        contentPanel.add(b2);
+        contentPanel.add(emptyFieldsButton);
+        contentPanel.add(draftButton);
+        contentPanel.add(writeFormButton);
         add(contentPanel);
     }
 
@@ -130,13 +122,17 @@ public class FormPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object o = e.getSource();
         FileReader fr = new FileReader();
-        if (o == b1) {
+        if (o == getFileButton) {
             getFile();
-        } else if (o == b2) {
-            writeToForm(fr);
-        } else if (o == b3) {
-            addFeature();
-        } else if (o == b4) {
+        } else if (o == draftButton) {
+            if(isFileValid()){
+                createFormDraft();
+            }
+        } else if (o == writeFormButton) {
+            if(isFileValid()){
+                writeForm(fr);
+            }
+        } else if (o == emptyFieldsButton) {
             emptyFields();
         } 
     }
@@ -169,71 +165,138 @@ public class FormPanel extends JPanel implements ActionListener {
         filePath = selectedFile.getAbsolutePath();
         filepathgui.setText("File Path: " + filePath);
     }
-
-    private void writeToForm(FileReader fr) {
-        if (!filePath.equals("-1")){
-            Form form = new Form();
-            
-            // Set Basic Info
-            form.setPropertyName(propertyNameField.getText());
-            form.setStreetAddress(streetAddressField.getText());
-            form.setPropertyOwner(propertyOwnerField.getText());
-            form.setInspectorName(inspectorNameField.getText());
-            form.setInspectionDate(inspectionDateField.getText());
-            form.setInspectionId("INSP-" + System.currentTimeMillis());
-            // Set General Assessment
-            form.setOverallCondition(overallConditionField.getText());
-            form.setComments(commentsField.getText());
-            form.setAdvice(adviceField.getText());
-            form.setFollowUpActivity(followUpActivityField.getText());
-            // Write to Form
-            fr.writeForm(filePath, form);
-
+    // to patch with a check for non-excel files
+    private boolean isFileValid(){
+        if(!filePath.equals("-1")){
+            return true;
         } else { 
-            JOptionPane.showMessageDialog(this,"File not selected! Choose an Excel file before submitting.");
+            JOptionPane.showMessageDialog(this,"File not selected! Choose an Excel file before writing.");
+            return false;
         }
+    }
+
+    private void createFormDraft() {
+        // Set Basic Info
+        form.setPropertyName(propertyNameField.getText());
+        form.setStreetAddress(streetAddressField.getText());
+        form.setPropertyOwner(propertyOwnerField.getText());
+        form.setInspectorName(inspectorNameField.getText());
+        form.setInspectionDate(inspectionDateField.getText());
+        form.setInspectionId("INSP-" + System.currentTimeMillis());
+        // Set General Assessment
+        form.setOverallCondition(overallConditionField.getText());
+        form.setComments(commentsField.getText());
+        form.setAdvice(adviceField.getText());
+        form.setFollowUpActivity(followUpActivityField.getText());
+    }
+    
+    private void writeForm(FileReader fr){
+        fr.writeForm(filePath, form);
     }
 
     // Nested Class for Feature Panel, a panel with buttons that can perpetually add features to Form
 
-    public class FeaturePanel extends JPanel {
-        
-        public FeaturePanel(){
+    public class featurePanel extends JPanel {
+        private RadioButtonArray northconditionarray,southconditionarray,westconditionarray,eastconditionarray;
+        private JTextField featureNameField, featureDescriptionField;
+        private ArrayList<RadioButtonArray> radiobuttons;
+        private JButton submitfeaturebutton;
+        public featurePanel(){
             initializeGUI();
         }
         public void initializeGUI(){
+            
+            featureNameField = initializTextField(featureNameField);
+            featureDescriptionField = initializTextField(featureDescriptionField);
+
+            radiobuttons = new ArrayList<>();
             setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
             JLabel title3 = createJLabelOnCenter("Add a Feature");
             title3.setFont(bold);
             add(title3);
+
             add(createJLabelOnCenter("Feature Name"));
             add(featureNameField);
             add(createJLabelOnCenter("Feature Description"));
             add(featureDescriptionField);
+
             add(createJLabelOnCenter("North Condition"));
-            add(new checkBoxArrayPanel());
+            northconditionarray = initializeCheckBoxArrayPanel(northconditionarray, "North Condition");
+            add(northconditionarray);
+            
             add(createJLabelOnCenter("South Condition"));
-            add(new checkBoxArrayPanel());
+            southconditionarray = initializeCheckBoxArrayPanel(southconditionarray, "South Condition");
+            add(southconditionarray);
+
             add(createJLabelOnCenter("East Condition"));
-            add(new checkBoxArrayPanel());
+            eastconditionarray = initializeCheckBoxArrayPanel(eastconditionarray, "East Condition");
+            add(eastconditionarray);
+
             add(createJLabelOnCenter("West Condition"));
-            add(new checkBoxArrayPanel());
+            westconditionarray = initializeCheckBoxArrayPanel(westconditionarray, "West Condition");
+            add(westconditionarray);
+
             add(createJLabelOnCenter(""));
+            submitfeaturebutton = new JButton("Add a Feature");
+            submitfeaturebutton.setAlignmentX(CENTER_ALIGNMENT);
+            submitfeaturebutton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (isFileValid()) {
+                        System.out.println("New Feature created.");
+                        System.out.println("Feature Name: " + featureNameField.getText());
+                        System.out.println("Feature Description: " + featureDescriptionField.getText());
+                        String outputString = "Conditions : ";
+                        ArrayList<String> conditionStrings = new ArrayList<>();
+                        for(RadioButtonArray rba : radiobuttons){
+                            outputString = outputString + "\n" + rba.getName() + ": " + rba.getOutput();
+                            conditionStrings.add(rba.getOutput());
+                        }
+                        Form.Feature feature = new Form.Feature(featureNameField.getText(),featureDescriptionField.getText(),conditionStrings.get(0),conditionStrings.get(2),conditionStrings.get(1),conditionStrings.get(3));
+                        form.addFeature(feature);
+                        System.out.println(outputString);
+                        clearFields();
+                    }
+                }    
+            });
+            add(submitfeaturebutton);
+
+
+        }
+
+        public void clearFields(){
+            featureNameField.setText("");
+            featureDescriptionField.setText("");
+            for(RadioButtonArray rba : radiobuttons){
+                rba.clearFields();
+            }
+        }
+
+        // A helper object containing multiple checkboxes that return one single output
+
+        public RadioButtonArray initializeCheckBoxArrayPanel(RadioButtonArray rba, String name){
+            rba = new RadioButtonArray(name);
+            radiobuttons.add(rba);
+            rba.setAlignmentX(CENTER_ALIGNMENT);
+            return rba;
         }
         
-        public class checkBoxArrayPanel extends JPanel implements ItemListener {
-            public String output;
-            private JCheckBox nvBox,eBox,vgBox, gBox,pBox,vpBox;
-            private ArrayList<JCheckBox> checkboxes;
-            public checkBoxArrayPanel() {
+        public class RadioButtonArray extends JPanel implements ItemListener {
+            private String output = "";
+            private final ButtonGroup group;
+            private final JRadioButton nvBox,eBox,vgBox, gBox,pBox,vpBox;
+            private final ArrayList<JRadioButton> radiobuttons;
+            public RadioButtonArray(String name) {
+                setName(name);
                 setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
-                checkboxes = new ArrayList<>();
-                nvBox = initializeJCheckBox("Not Visible");
-                eBox = initializeJCheckBox("Excellent");
-                vgBox = initializeJCheckBox("Very Good");
-                gBox = initializeJCheckBox("Good");
-                pBox = initializeJCheckBox("Poor");
-                vpBox = initializeJCheckBox("Very Poor");
+                radiobuttons = new ArrayList<>();
+                group = new ButtonGroup();
+                nvBox = initializeJRadioButton("Not Visible");
+                eBox = initializeJRadioButton("Excellent");
+                vgBox = initializeJRadioButton("Very Good");
+                gBox = initializeJRadioButton("Good");
+                pBox = initializeJRadioButton("Poor");
+                vpBox = initializeJRadioButton("Very Poor");
                 add(nvBox);
                 add(eBox);
                 add(vgBox);
@@ -246,39 +309,35 @@ public class FormPanel extends JPanel implements ActionListener {
                 Object o = e.getSource();
                 int change = e.getStateChange();
                 if (o == nvBox){
-                    output = "nv";
+                    output = "NV";
                 } else if (o == eBox){
-                    output = "e";
+                    output = "E";
                 } else if (o == vgBox){
-                    
+                    output = "VG";
                 } else if (o == gBox){
-                    //
+                    output = "G";
                 } else if (o == pBox){
-                    //
+                    output = "P";
                 } else if (o == vpBox){
-                    //
+                    output = "VP";
                 }
-                clearSelection();
-                System.out.println("Output: " + output);
-                
             }
-            public JCheckBox initializeJCheckBox(String label){
-                JCheckBox c = new JCheckBox(label, null, false);
-                c.addItemListener(this);
-                c.setAlignmentX(CENTER_ALIGNMENT);
-                checkboxes.add(c);
-                return c;
+            private JRadioButton initializeJRadioButton(String label){
+                JRadioButton rb = new JRadioButton(label, null, false);
+                rb.addItemListener(this);
+                rb.setAlignmentX(CENTER_ALIGNMENT);
+                radiobuttons.add(rb);
+                group.add(rb);
+                return rb;
             }
-            public void clearSelection(){
-                for (JCheckBox checkBox : checkboxes){
-                    checkBox.setSelected(false);
-                }
+            private void clearFields(){
+                output = "";
+                group.clearSelection();
+            }
+            public String getOutput(){
+                return output;
             }
         }
-    }
-
-    public void addFeature(){
-
     }
 
     // Helper methods for initializing UI components

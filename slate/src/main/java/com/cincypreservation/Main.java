@@ -22,12 +22,6 @@ public class Main {
     }
 
     public static void createAndShowGUI(){
-        JFrame frame = new JFrame(TITLE);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        frame.add(new TabbedMenu(), BorderLayout.CENTER);
-        frame.setSize(FRAME_DIMENSION);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        PropertySelector ps = new PropertySelector();
     }
 }

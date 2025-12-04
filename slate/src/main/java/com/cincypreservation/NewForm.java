@@ -22,6 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+
 public class NewForm extends JPanel {
 
     private CardLayout cardLayout = new CardLayout();
@@ -47,7 +48,12 @@ public class NewForm extends JPanel {
     JTextField otherCommentsField;
     JTextField followUpInfoField;
 
-    public NewForm(String address) {
+    JFrame parentFrame;
+    private AddressHandler ah;
+
+    public NewForm(String address, AddressHandler ah, JFrame parentFrame) {
+        this.ah = ah;
+        this.parentFrame = parentFrame;
         setLayout(new BorderLayout());
 
         //init cards
@@ -138,7 +144,7 @@ public class NewForm extends JPanel {
         }
     }
 
-    //
+    //final comments from inspector
     private JPanel createInspectorPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBorder(BorderFactory.createTitledBorder("Final Comments"));
@@ -227,17 +233,17 @@ public class NewForm extends JPanel {
     }
 
     private void finishWizard() {
-        // Build inspection data object
+        //build inspection data object
         InspectionData data = new InspectionData();
     
-        // General info
+        //general info
         data.propertyName = nameField.getText().trim();
         data.propertyAddress = addressField.getText().trim();
         data.ownerName = ownerField.getText().trim();
         data.inspectorName = inspNameField.getText().trim();
         data.inspectionDate = inspDateField.getText().trim();
     
-        // Sections
+        //sections
         for (SectionRow row : sectionRows) {
             InspectionData.SectionRating rating = new InspectionData.SectionRating();
             rating.sectionName = row.nameField.getText().trim();
@@ -245,24 +251,25 @@ public class NewForm extends JPanel {
             data.sections.add(rating);
         }
     
-        // Inspector comments panel
+        //inspector comments panel
         data.overallCondition = overallConditionField.getText().trim();
         data.comments = otherCommentsField.getText().trim();
         data.followUpNotes = followUpInfoField.getText().trim();
     
-        // === At this point, "data" contains EVERYTHING you need ===
-        // Send it to your Excel writer
+        //save to excel file
         try {
             ExcelWriter ew = new ExcelWriter("~/");
             ew.saveInspection(data);
             JOptionPane.showMessageDialog(this, "Form saved successfully!");
+            ah.addAddress(addressField.getText().trim());
+            parentFrame.dispose();
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error saving file: " + e.getMessage());
         }
     }
 
-    // keep panels sized consistently
+    //keep panels sized consistently
     private JPanel wrap(JPanel inner) {
         JPanel outer = new JPanel(new BorderLayout());
         outer.add(inner, BorderLayout.NORTH);
@@ -272,14 +279,5 @@ public class NewForm extends JPanel {
     private JPanel cardPanelSize(JPanel p) {
         p.setPreferredSize(new Dimension(600, 400));
         return p;
-    }
-
-    //test
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Form for");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(700, 600);
-        frame.add(new NewForm("123 Main St"));
-        frame.setVisible(true);
     }
 }

@@ -9,6 +9,10 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class to populate the searchable address list from a json file. Uses GSON for easy json parsing. Maintains the addresses.json file with a
+ * list of all addresses added to the application.
+ */
 public class AddressHandler {
     private static final String FILE = "addresses.json";
     private static final Gson gson = new Gson();

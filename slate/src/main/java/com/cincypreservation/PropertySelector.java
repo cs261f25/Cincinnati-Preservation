@@ -23,6 +23,10 @@ import javax.swing.SwingUtilities;
 
 import org.apache.poi.xssf.usermodel.*;
 
+/**
+ * Main menu for selecting or adding properties. Contains a search menu that draws from the addresses.json file to allow
+ * users to search for specific properties or add new ones. Selecting a property from the scrollable list opens a new form for that address.
+ */
 public class PropertySelector extends JPanel{
 
     private JFrame frame;

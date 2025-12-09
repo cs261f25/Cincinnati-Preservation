@@ -14,6 +14,10 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+/**
+ * Class to write inspection data to Excel files. Each inspection is stored in a different sheet within the address-specific excel file,
+ * or if none exists it creates a new file and writes the data there.
+ */
 public class ExcelWriter {
 
     private final String baseDirectory;

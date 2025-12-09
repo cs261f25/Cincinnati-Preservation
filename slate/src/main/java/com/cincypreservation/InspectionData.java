@@ -3,6 +3,9 @@ package com.cincypreservation;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Template class to store information from inspections.
+ */
 public class InspectionData {
 
     public String propertyName;

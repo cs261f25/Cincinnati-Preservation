@@ -22,7 +22,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-
+/**
+ * Template for creating a new inspection form, uses CardLayout class to create different sections for inspectors to enter info
+ * and buttons to traverse through the cards. On finish, collects all data to create an InspectionForm object to pass to the ExcelWriter.
+ */
 public class NewForm extends JPanel {
 
     private CardLayout cardLayout = new CardLayout();

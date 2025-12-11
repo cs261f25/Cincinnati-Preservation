@@ -1,16 +1,16 @@
 package com.cincypreservation;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 public class AddressHandler {
-    private static final String FILE = "addresses.json";
+    private static final String FILE = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "addresses.json";
     private static final Gson gson = new Gson();
 
     //init address list for searching

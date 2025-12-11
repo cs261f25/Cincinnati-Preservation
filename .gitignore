@@ -4,3 +4,4 @@ slate/target/
 *.class
 inspections.txt
 .iml
+.json

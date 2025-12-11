@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,8 @@ import javax.swing.JTextField;
 
 
 public class NewForm extends JPanel {
+
+    private final String DOCUMENTS_DIRECTORY = System.getProperty("user.home") + File.separator + "Documents";
 
     private CardLayout cardLayout = new CardLayout();
     private JPanel cardPanel = new JPanel(cardLayout);
@@ -258,7 +261,7 @@ public class NewForm extends JPanel {
     
         //save to excel file
         try {
-            ExcelWriter ew = new ExcelWriter("~/");
+            ExcelWriter ew = new ExcelWriter(DOCUMENTS_DIRECTORY);
             ew.saveInspection(data);
             JOptionPane.showMessageDialog(this, "Form saved successfully!");
             ah.addAddress(addressField.getText().trim());
